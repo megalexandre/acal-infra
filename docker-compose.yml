@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+
+  acal-api:
+    image: alexandrequeiroz/api:1.0.0
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/acaldb
+      - SPRING_DATASOURCE_USERNAME=${MYSQLDB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILE}  
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - db
+    networks:
+      - acal-network
+
+  db:
+    image: mysql:8.0-debian
+    restart: always
+    environment:
+      MYSQL_DATABASE: acaldb
+      MYSQL_ROOT_PASSWORD: ${MYSQLDB_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - acal-network
+
+networks:
+  acal-network:
+    driver: bridge
