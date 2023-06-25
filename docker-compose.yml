@@ -1,16 +1,28 @@
 version: "3.7"
 services:
 
-  acal-api:
+  app: 
+    container_name: acal-app
+    image: alexandrequeiroz/app:1.0.0
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    networks:
+      - acal-network
+
+  api:
+    container_name: acal-api
     image: alexandrequeiroz/api:1.0.0
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/acaldb
       - SPRING_DATASOURCE_USERNAME=${MYSQLDB_USER}
       - SPRING_DATASOURCE_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILE}  
-      - SERVER_PORT=8443
+      - SERVER_PORT=${SPRING_PORT}
     ports:
-      - 8443:8443
+      - ${SPRING_PORT}:${SPRING_PORT}
     env_file:
       - ./.env
     restart: unless-stopped
@@ -25,6 +37,7 @@ services:
       - acal-network
 
   db:
+    container_name: acal-db
     image: mysql:8.0-debian
     restart: always
     environment:
