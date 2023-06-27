@@ -3,7 +3,7 @@ services:
 
   app: 
     container_name: acal-app
-    image: alexandrequeiroz/app:1.0.0
+    image: alexandrequeiroz/app:1.0.1
     ports:
       - "80:80"
       - "443:443"
@@ -46,7 +46,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "${MYSQL_VOLUME}:/var/lib/mysql"
+      - /var/mysql/acal:/var/lib/mysql
     networks:
       - acal-network
 
