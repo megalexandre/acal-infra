@@ -14,7 +14,7 @@ services:
 
   api:
     container_name: acal-api
-    image: alexandrequeiroz/api:1.0.0
+    image: alexandrequeiroz/api:1.0.1
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/acaldb
       - SPRING_DATASOURCE_USERNAME=${MYSQLDB_USER}
