@@ -3,7 +3,7 @@ services:
 
   app: 
     container_name: acal-app
-    image: alexandrequeiroz/app:1.2.0
+    image: alexandrequeiroz/app:1.3.0
     ports:
       - "80:80"
       - "443:443"
@@ -14,7 +14,7 @@ services:
 
   api:
     container_name: acal-api
-    image: alexandrequeiroz/api:1.1.0
+    image: alexandrequeiroz/api:1.3.0
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:${MYSQLDB_PORT}/acaldb
       - SPRING_DATASOURCE_USERNAME=${MYSQLDB_USER}
